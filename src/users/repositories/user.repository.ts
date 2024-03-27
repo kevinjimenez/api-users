@@ -6,7 +6,7 @@ import { DatabaseService } from 'src/database/database.service';
 export class UserRepository {
   constructor(private databaseService: DatabaseService) {}
 
-  createUser(payload: Prisma.UserCreateInput): Promise<User> {
+  public createUser(payload: Prisma.UserCreateInput): Promise<User> {
     return this.databaseService.user.create({
       data: payload,
     });
@@ -19,11 +19,33 @@ export class UserRepository {
   //   orderBy?: Prisma.UserOrderByWithRelationInput;
   // }
 
-  async getUsers(): Promise<User[]> {
-    // const { skip, take, where, orderBy } = params;
+  public getUsers(): Promise<User[]> {
     return this.databaseService.user.findMany({
-      take: 3, // limit
-      skip: 0, // page
+      // where,
+      // take: 3, // limit
+      // skip: 0, // page
     });
+  }
+
+  public getUserBy(params: { where?: Prisma.UserWhereInput }): Promise<User> {
+    const { where } = params;
+    return this.databaseService.user.findFirst({
+      where,
+    });
+  }
+
+  public updateUser(params: {
+    where: Prisma.UserWhereUniqueInput;
+    data: Prisma.UserUpdateInput;
+  }): Promise<User> {
+    const { where, data } = params;
+    return this.databaseService.user.update({ where, data });
+  }
+
+  public deleteUser(params: {
+    where: Prisma.UserWhereUniqueInput;
+  }): Promise<User> {
+    const { where } = params;
+    return this.databaseService.user.delete({ where });
   }
 }
