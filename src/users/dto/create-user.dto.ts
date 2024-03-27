@@ -10,7 +10,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { Regex } from './../../common/constants/regex';
-import { Roles } from './../../common/enums/roles.enum';
+import { Roles } from '../../auth/enums/roles.enum';
 
 export class CreateUserDto {
   @IsNotEmpty()

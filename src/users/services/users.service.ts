@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserRepository } from '../repositories/user.repository';
@@ -15,11 +16,15 @@ export class UsersService {
         name,
         lastname,
         email,
-        password,
+        password: bcrypt.hashSync(password, 10),
         role,
       };
       const createdUser: User =
         await this.userRepository.createUser(userToCreate);
+      delete createdUser.createdAt;
+      delete createdUser.updatedAt;
+      delete createdUser.email;
+      delete createdUser.password;
       return createdUser;
     } catch (error) {
       console.log(error);
