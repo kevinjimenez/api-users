@@ -17,8 +17,8 @@ async function bootstrap() {
 
   // documentation backend
   const config = new DocumentBuilder()
-    .setTitle('RestFul Api')
-    .setDescription('API description')
+    .setTitle('Users Api')
+    .setDescription('Desafio para la posicion de Backend en la empresa Eiteck')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

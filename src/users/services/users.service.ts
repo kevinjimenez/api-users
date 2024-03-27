@@ -10,8 +10,15 @@ export class UsersService {
 
   public async create(createUserDto: CreateUserDto) {
     try {
+      const { name, lastname, email, role } = createUserDto;
+      const userToCreate: Prisma.UserCreateInput = {
+        name,
+        lastname,
+        email,
+        role,
+      };
       const createdUser: User =
-        await this.userRepository.createUser(createUserDto);
+        await this.userRepository.createUser(userToCreate);
       return createdUser;
     } catch (error) {
       console.log(error);

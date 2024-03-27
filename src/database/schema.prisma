@@ -27,6 +27,12 @@ model User {
   updatedAt DateTime @updatedAt
   name      String   @db.VarChar(50)
   lastname  String   @db.VarChar(50)
-  email     String   @unique @db.VarChar(30)
-  role      String   @db.VarChar(30)
+  email     String   @unique
+  role      Role     @default(GUEST)
+}
+
+enum Role {
+  ADMIN
+  GUEST
+  STANDART
 }
