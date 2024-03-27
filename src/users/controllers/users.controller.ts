@@ -1,4 +1,3 @@
-import { FilterDto } from 'src/common/dto/filter.dto';
 import {
   Body,
   Controller,
@@ -10,6 +9,9 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Roles } from 'src/auth/enums/roles.enum';
+import { FilterDto } from 'src/common/dto/filter.dto';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UsersService } from '../services/users.service';
@@ -19,6 +21,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @Auth(Roles.GUEST, Roles.ADMIN)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }

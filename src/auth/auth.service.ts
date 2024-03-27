@@ -21,23 +21,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  // async create(createUserDto: CreateUserDto) {
-  //   try {
-  //     const { password, ...userData } = createUserDto;
-
-  //     const user = this.userRepository.create({
-  //       ...userData,
-  //       // encriptar password
-  //       password: bcrypt.hashSync(password, 10),
-  //     });
-  //     await this.userRepository.save(user);
-  //     // delete user.password;
-  //     return { ...user, token: this.getJwtToken({ id: user.id }) };
-  //   } catch (e) {
-  //     this.handleDBExceptions(e);
-  //   }
-  // }
-
   async login(loginUserDto: LoginUserDto) {
     const { password, email } = loginUserDto;
 
@@ -70,7 +53,6 @@ export class AuthService {
 
   async checkAuthStatus(user: User) {
     delete user.role;
-    // delete user.isActive;
     return { ...user, token: this.getJwtToken({ id: user.id }) };
   }
 
