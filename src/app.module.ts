@@ -5,6 +5,7 @@ import { CommonModule } from './common/common.module';
 import { EnvConfiguration } from './common/config/env.config';
 import { JoiValidationSchema } from './common/config/joi.validation';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
 
 @Module({
@@ -15,6 +16,7 @@ import { HealthModule } from './health/health.module';
     }),
     CommonModule,
     HealthModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
 })
