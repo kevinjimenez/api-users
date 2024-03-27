@@ -7,6 +7,7 @@ import { JoiValidationSchema } from './common/config/joi.validation';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { HealthModule } from './health/health.module';
     CommonModule,
     HealthModule,
     DatabaseModule,
+    UsersModule,
   ],
   controllers: [AppController],
 })
