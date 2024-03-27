@@ -1,3 +1,4 @@
+import { FilterDto } from 'src/common/dto/filter.dto';
 import {
   Body,
   Controller,
@@ -12,7 +13,6 @@ import {
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UsersService } from '../services/users.service';
-import { FilterDto } from 'src/common/dto/filter.dto';
 
 @Controller('users')
 export class UsersController {
