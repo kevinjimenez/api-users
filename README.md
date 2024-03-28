@@ -15,13 +15,17 @@
 ```
 docker-compose up -d
 ```
-6. Ejecutar SEED
+6. Se debe ejecutar la migracion en la base de datos
+```
+ npm run migrate -- <nombre_migracion>
+```
+7. Ejecutar SEED
 ```
 http://localhost:3000/api/seed
 ```
-7. Levantar: ```npm run start:dev```
+8. Levantar: ```npm run start:dev```
 
-8. Usuarios ccredenciales
+9. Usuarios ccredenciales
 ```
 // ADMIN
 {
