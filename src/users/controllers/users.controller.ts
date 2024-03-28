@@ -10,7 +10,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { Roles } from 'src/auth/enums/roles.enum';
 import { FilterDto } from 'src/common/dto/filter.dto';
@@ -37,14 +37,14 @@ export class UsersController {
 
   @Get('search')
   @Auth(Roles.ADMIN, Roles.STANDART)
-  findBy(@GetUser() user: User, @Query() filter: FilterDto) {
+  async findBy(@GetUser() user: User, @Query() filter: FilterDto) {
     const { email: userEmail, role } = user;
     const { email } = filter;
     if (role === Roles.ADMIN) {
-      return this.usersService.findOneBy({ where: { email } });
+      return await this.findOneBy({ where: { email } });
     }
     if (role === Roles.STANDART && userEmail === email) {
-      return this.usersService.findOneBy({ where: { email } });
+      return await this.findOneBy({ where: { email } });
     }
 
     throw new ForbiddenException(`User ${user.name} need a valid role`);
@@ -60,10 +60,10 @@ export class UsersController {
     const { id: userId, role } = user;
 
     if (role === Roles.ADMIN) {
-      return this.usersService.update(id, updateUserDto);
+      return this.updateUser(id, updateUserDto);
     }
     if (role === Roles.STANDART && id === userId) {
-      return this.usersService.update(id, updateUserDto);
+      return this.updateUser(id, updateUserDto);
     }
 
     throw new ForbiddenException(`User ${user.name} need a valid role`);
@@ -73,5 +73,20 @@ export class UsersController {
   @Auth(Roles.ADMIN)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.remove(id);
+  }
+
+  private updateUser(id: string, updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
+  }
+
+  private async findOneBy(params: { where?: Prisma.UserWhereInput }) {
+    const user = await this.usersService.findOneBy(params);
+    return {
+      id: user.id,
+      name: user.name,
+      lastname: user.lastname,
+      email: user.email,
+      role: user.role,
+    };
   }
 }

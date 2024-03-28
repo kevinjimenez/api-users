@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -28,16 +28,23 @@ export class UsersService {
       return createdUser;
     } catch (error) {
       console.log(error);
-      // return HandleExceptions.DB(error);
+      throw new InternalServerErrorException('Error creating user');
     }
   }
 
   public async findAll() {
     try {
-      return await this.userRepository.getUsers();
+      const users = await this.userRepository.getUsers();
+      return users.map((user) => ({
+        id: user.id,
+        name: user.name,
+        lastname: user.lastname,
+        email: user.email,
+        role: user.role,
+      }));
     } catch (error) {
       console.log(error);
-      // return HandleExceptions.DB(error);
+      throw new InternalServerErrorException('Error getting users');
     }
   }
 
@@ -46,7 +53,7 @@ export class UsersService {
       return await this.userRepository.getUserBy(params);
     } catch (error) {
       console.log(error);
-      // return HandleExceptions.DB(error);
+      throw new InternalServerErrorException('Error getting user by params');
     }
   }
 
@@ -58,10 +65,17 @@ export class UsersService {
         },
         data: updateUserDto,
       };
-      return await this.userRepository.updateUser(params);
+      const user = await this.userRepository.updateUser(params);
+      return {
+        id: user.id,
+        name: user.name,
+        lastname: user.lastname,
+        email: user.email,
+        role: user.role,
+      };
     } catch (error) {
       console.log(error);
-      // return HandleExceptions.DB(error);
+      throw new InternalServerErrorException('Error updating user');
     }
   }
 
@@ -75,7 +89,7 @@ export class UsersService {
       return await this.userRepository.deleteUser(params);
     } catch (error) {
       console.log(error);
-      // return HandleExceptions.DB(error);
+      throw new InternalServerErrorException('Error delete user');
     }
   }
 }
