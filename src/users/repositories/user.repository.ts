@@ -16,19 +16,8 @@ export class UserRepository {
     return this.databaseService.user.createMany({ data: payload });
   }
 
-  // params: {
-  //   skip?: number;
-  //   take?: number;
-  //   where?: Prisma.UserWhereInput;
-  //   orderBy?: Prisma.UserOrderByWithRelationInput;
-  // }
-
   public getUsers(): Promise<User[]> {
-    return this.databaseService.user.findMany({
-      // where,
-      // take: 3, // limit
-      // skip: 0, // page
-    });
+    return this.databaseService.user.findMany({});
   }
 
   public getUserBy(params: { where?: Prisma.UserWhereInput }): Promise<User> {

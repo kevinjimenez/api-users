@@ -25,17 +25,6 @@ export class AuthService {
     const { password, email } = loginUserDto;
 
     const user = await this.usersService.findOneBy({ where: { email } });
-    // ({
-    //   where: {
-    //     email,
-    //   },
-    //   select: {
-    //     fullName: true,
-    //     email: true,
-    //     password: true,
-    //     id: true,
-    //   },
-    // });
 
     if (!user)
       throw new UnauthorizedException(`Credentials are not valid (email)`);
@@ -44,11 +33,6 @@ export class AuthService {
       throw new UnauthorizedException(`Credentials are not valid (password)`);
 
     return { ...user, token: this.getJwtToken({ id: user.id }) };
-
-    // try {
-    // } catch (e) {
-    //   this.handleDBExceptions(e);
-    // }
   }
 
   async checkAuthStatus(user: User) {
