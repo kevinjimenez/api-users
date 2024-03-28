@@ -9,7 +9,7 @@ import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-// import { SeedModule } from './seed/seed.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -20,9 +20,9 @@ import { AuthModule } from './auth/auth.module';
     CommonModule,
     HealthModule,
     DatabaseModule,
+    SeedModule,
     UsersModule,
     AuthModule,
-    // SeedModule,
   ],
   controllers: [AppController],
 })

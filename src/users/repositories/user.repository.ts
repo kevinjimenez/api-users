@@ -48,4 +48,9 @@ export class UserRepository {
     const { where } = params;
     return this.databaseService.user.delete({ where });
   }
+
+  public async deleteAll() {
+    await this.databaseService.user.deleteMany({});
+    return 'delete all';
+  }
 }

@@ -1,9 +1,11 @@
-// import { Module } from '@nestjs/common';
-// import { SeedService } from './seed.service';
-// import { SeedController } from './seed.controller';
+import { Module } from '@nestjs/common';
+import { UsersModule } from './../users/users.module';
+import { SeedController } from './seed.controller';
+import { SeedService } from './seed.service';
 
-// @Module({
-//   controllers: [SeedController],
-//   providers: [SeedService],
-// })
-// export class SeedModule {}
+@Module({
+  imports: [UsersModule],
+  controllers: [SeedController],
+  providers: [SeedService],
+})
+export class SeedModule {}

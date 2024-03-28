@@ -1,29 +1,26 @@
-// import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { UserRepository } from './../users/repositories/user.repository';
+import { initialData } from './data/seed-data';
 
-// @Injectable()
-// export class SeedService {
-//   async runSeed() {
-//     await this.deleteTables();
+@Injectable()
+export class SeedService {
+  constructor(private readonly userRepository: UserRepository) {}
 
-//     await this.insertUsers();
-//     return `seed execute`;
-//   }
+  async runSeed() {
+    await this.deleteTables();
 
-//   private async deleteTables() {
-//     await this.productsService.deleteAllProducts();
-//     const queryBuilder = this.userRepository.createQueryBuilder();
-//     await queryBuilder.delete().where({}).execute();
-//   }
+    await this.insertUsers();
+    return `seed execute`;
+  }
 
-//   private async insertUsers() {
-//     const seedUsers = initialData.users;
-//     const users: User[] = [];
-//     seedUsers.forEach((user) => {
-//       // user.password = bcrypt.hashSync(user.password, 10);
-//       users.push(this.userRepository.create(user));
-//     });
+  private async deleteTables() {
+    await this.userRepository.deleteAll();
+  }
 
-//     const usersDB = await this.userRepository.save(users);
-//     return usersDB[0];
-//   }
-// }
+  private async insertUsers(): Promise<User> {
+    const seedUser = initialData.user;
+    const userDB = await this.userRepository.createUser(seedUser);
+    return userDB;
+  }
+}
