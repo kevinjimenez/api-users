@@ -12,6 +12,10 @@ export class UserRepository {
     });
   }
 
+  public createMany(payload: Prisma.UserCreateInput[]) {
+    return this.databaseService.user.createMany({ data: payload });
+  }
+
   // params: {
   //   skip?: number;
   //   take?: number;

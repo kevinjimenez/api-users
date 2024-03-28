@@ -10,15 +10,31 @@ export interface SeedUser {
 }
 
 interface SeedData {
-  user: SeedUser;
+  users: SeedUser[];
 }
 
 export const initialData: SeedData = {
-  user: {
-    name: 'Test',
-    lastname: 'One',
-    email: 'test1@google.com',
-    password: bcrypt.hashSync('Abc123', 10),
-    role: Role.ADMIN,
-  },
+  users: [
+    {
+      name: 'Test',
+      lastname: 'One',
+      email: 'test1@google.com',
+      password: bcrypt.hashSync('Abc123', 10),
+      role: Role.ADMIN,
+    },
+    {
+      name: 'Test',
+      lastname: 'Two',
+      email: 'test2@google.com',
+      password: bcrypt.hashSync('Abc123', 10),
+      role: Role.GUEST,
+    },
+    {
+      name: 'Test',
+      lastname: 'three',
+      email: 'test3@google.com',
+      password: bcrypt.hashSync('Abc123', 10),
+      role: Role.STANDART,
+    },
+  ],
 };

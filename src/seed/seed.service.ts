@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { UserRepository } from './../users/repositories/user.repository';
 import { initialData } from './data/seed-data';
 
@@ -18,9 +18,8 @@ export class SeedService {
     await this.userRepository.deleteAll();
   }
 
-  private async insertUsers(): Promise<User> {
-    const seedUser = initialData.user;
-    const userDB = await this.userRepository.createUser(seedUser);
-    return userDB;
+  private async insertUsers(): Promise<Prisma.BatchPayload> {
+    const seedUsers = initialData.users;
+    return await this.userRepository.createMany(seedUsers);
   }
 }

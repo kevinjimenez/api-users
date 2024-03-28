@@ -15,8 +15,6 @@ import { UsersModule } from 'src/users/users.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        // console.log('jwt', configService.get('JWT_SECRET'));
-        // console.log('en jwt', process.env.JWT_SECRET);
         return {
           secret: configService.get('JWT_SECRET'),
           signOptions: {
